@@ -1,128 +1,200 @@
-# Testing Plan
+Testing Plan
+1. Objective
+The objective of this testing plan is to verify the basic operation and functionality of the ESP32-based fire detection prototype. The testing focuses on sensor readings, controller behaviour, detection logic, simulated warning outputs, and basic fault handling. It also helps identify hardware and software errors before further development.
 
-## 1. Objective
+2. Testing Scope
+The testing covers the initialization of the ESP32, communication with connected sensors, reading and displaying sensor data, LED warning indication, detection logic, and basic error handling. The prototype is tested under safe and controlled environmental conditions. Real fire suppression performance is not included in the initial testing.
 
-The objective of this testing plan is to verify the basic operation of the ESP32-based fire detection prototype.
+3. Required Components
+The following components are required to perform the prototype tests:
 
-The initial tests focus on sensor readings, controller behaviour, simulated output, and fault handling. They do not validate the performance of a real fire suppression system.
+ESP32 development board: Processes sensor inputs and executes the program.
 
-## 2. Testing Scope
+MQ-2 smoke sensor: Provides smoke- and combustible-gas-related readings.
 
-The prototype testing covers:
+IR flame sensor: Detects suitable infrared radiation.
 
-- ESP32 initialization
-- Sensor readings
-- Serial Monitor output
-- Simulated LED indication
-- Detection logic
-- Basic fault handling
-- Recording test results
+DHT11 sensor: Measures temperature and humidity.
 
-Real fire suppression performance is outside the scope of the initial prototype tests.
+LED and suitable resistor: Simulates the warning output.
 
-## 3. Required Components
+USB cable and power source: Supplies power and enables programming.
 
-| Component | Purpose |
-|---|---|
-| ESP32 development board | Reads inputs and runs the program |
-| MQ-2 sensor, if available | Provides smoke or gas-related readings |
-| IR flame sensor, if available | Provides flame-related readings |
-| DHT11 sensor, if available | Measures temperature and humidity |
-| LED and suitable resistor | Simulates a warning output |
-| USB cable and suitable power source | Powers the prototype |
-| Arduino IDE | Compiles and uploads the firmware |
+Computer with Arduino IDE: Used to compile, upload, and debug the program.
 
-Confirm the actual component models and wiring before beginning the tests.
+The actual sensor models, pin assignments, and operating voltages must be verified before testing.
 
-## 4. Pre-Test Checklist
+4. Pre-Test Checklist
+Before starting the tests, the following checks should be completed:
 
-Before powering the prototype:
+Verify the ESP32 board model and GPIO pin assignments.
 
-- [ ] Confirm the ESP32 board model.
-- [ ] Check each sensor's pin labels and operating voltage.
-- [ ] Verify the wiring against the selected board and sensor documentation.
-- [ ] Check that the LED uses a suitable current-limiting resistor.
-- [ ] Confirm the correct libraries are installed.
-- [ ] Select the correct board and serial port in Arduino IDE.
-- [ ] Keep the suppression cartridge and activation mechanism disconnected.
+Check the power supply and sensor wiring.
 
-## 5. Test Cases
+Confirm that the LED has a suitable current-limiting resistor.
 
-| Test ID | Test | Expected result |
-|---|---|---|
-| TC-01 | Power on the ESP32 | The board starts successfully |
-| TC-02 | Initialize the sensors | Available sensors initialize as expected |
-| TC-03 | Read the MQ-2 sensor | A reading is displayed in the Serial Monitor |
-| TC-04 | Read the flame sensor | A reading is displayed in the Serial Monitor |
-| TC-05 | Read the DHT11 sensor | Valid temperature and humidity readings are displayed |
-| TC-06 | Check the LED output | The LED responds to the configured simulated condition |
-| TC-07 | Check invalid sensor data | The program reports or handles invalid data where supported |
-| TC-08 | Observe repeated readings | Readings continue without unexpected program interruption |
+Install the required libraries in Arduino IDE.
 
-Some tests depend on which components are actually installed. Do not mark a test as passed until it has been performed.
+Select the correct board and serial port.
 
-## 6. Testing Procedure
+Verify that the firmware compiles without errors.
 
-### Step 1: Verify the Hardware
+Keep the suppression cartridge and activation mechanism disconnected.
 
-Check the board, sensors, power source, and connections against their documentation.
+These checks help prevent wiring errors and protect the electronic components from damage.
 
-### Step 2: Upload the Firmware
+5. Test Cases
+The following test cases are used to evaluate the prototype's basic functions.
 
-Compile the program in Arduino IDE, select the correct board and port, and upload the firmware.
+TC-01: ESP32 Initialization Test — Verify that the ESP32 starts and executes the uploaded program.
 
-### Step 3: Observe Sensor Readings
+TC-02: Sensor Initialization Test — Check whether the connected sensors initialize correctly.
 
-Open the Serial Monitor at the baud rate configured in the program. Record the sensor readings under ordinary, safe environmental conditions.
+TC-03: MQ-2 Sensor Test — Verify that sensor readings are displayed in the Serial Monitor.
 
-### Step 4: Check Sensor Response
+TC-04: IR Flame Sensor Test — Check the sensor output under suitable, controlled test conditions.
 
-Use only controlled, safe test conditions appropriate for each sensor. Follow the sensor manufacturer's instructions. Do not create an actual fire or expose components to hazardous heat or smoke.
+TC-05: DHT11 Sensor Test — Verify that valid temperature and humidity values are displayed.
 
-### Step 5: Check the Simulated Output
+TC-06: LED Output Test — Confirm that the LED responds to the programmed warning condition.
 
-If detection logic has been implemented, verify that the LED follows the configured conditions. If detection logic is not yet implemented, record the LED test as pending.
+TC-07: Fault-Handling Test — Check how the program responds to invalid or unavailable sensor data.
 
-### Step 6: Record Problems
+TC-08: Continuous Operation Test — Verify that sensor readings continue without unexpected program interruption.
 
-Document compilation errors, missing readings, unexpected values, sensor initialization failures, and wiring issues.
+TC-09: Detection Logic Test — Check whether the program identifies the defined input conditions correctly.
 
-### Step 7: Repeat the Tests
+TC-10: Restart Test — Verify that the ESP32 resumes normal operation after a routine reset.
 
-Repeat relevant tests to check whether the results are consistent.
+Each test should be marked Pass, Fail, or Pending based on the actual observations.
 
-## 7. Test Results Template
+6. Testing Procedure
+First, inspect the hardware connections and confirm that the circuit is safe to power on. Upload the firmware using Arduino IDE and open the Serial Monitor at the configured baud rate.
 
-Record actual observations in the following table.
+Next, observe the sensor readings under ordinary environmental conditions. Check whether the values are displayed correctly and whether they change appropriately during controlled, safe tests permitted by the sensor manufacturers.
 
-| Test ID | Date | Observed result | Status | Notes |
-|---|---|---|---|---|
-| TC-01 | TBD | TBD | Pending | TBD |
-| TC-02 | TBD | TBD | Pending | TBD |
-| TC-03 | TBD | TBD | Pending | TBD |
-| TC-04 | TBD | TBD | Pending | TBD |
-| TC-05 | TBD | TBD | Pending | TBD |
-| TC-06 | TBD | TBD | Pending | TBD |
-| TC-07 | TBD | TBD | Pending | TBD |
-| TC-08 | TBD | TBD | Pending | TBD |
+After checking the sensors, verify the LED output using the implemented detection logic or a dedicated test mode. Examine any error messages and repeat relevant tests to check consistency. Record all observations, unexpected behaviour, and corrective actions.
 
-Update each row only after performing the corresponding test. Use **Pass**, **Fail**, or **Pending** as appropriate.
+7. Test Results
+The results should be recorded in a test-results table for future reference.
 
-## 8. Safety Precautions
+Test ID
 
-- Do not perform uncontrolled fire tests.
-- Do not use a homemade circuit to activate an aerosol cartridge.
-- Keep the prototype disconnected from real suppression hardware.
-- Disconnect power before changing wiring.
-- Follow the component manufacturer's electrical and handling instructions.
-- Do not treat successful sensor readings as proof that the system can reliably detect or extinguish fires.
+Test description
 
-## 9. Limitations
+Observed result
 
-The test results apply only to the hardware, firmware, and conditions actually tested.
+Status
 
-Successful prototype testing does not establish certification, reliable fire detection, or effective fire suppression. Additional engineering and application-specific validation are required before real-world deployment.
+TC-01
 
-## 10. Conclusion
+ESP32 initialization
 
-This testing plan provides a structured way to evaluate the ESP32 prototype and document its behaviour. Recorded results will help identify problems and guide future improvements while keeping initial testing focused on safe electronic simulation.
+To be recorded
+
+Pending
+
+TC-02
+
+Sensor initialization
+
+To be recorded
+
+Pending
+
+TC-03
+
+MQ-2 sensor reading
+
+To be recorded
+
+Pending
+
+TC-04
+
+Flame sensor reading
+
+To be recorded
+
+Pending
+
+TC-05
+
+Temperature and humidity
+
+To be recorded
+
+Pending
+
+TC-06
+
+LED warning output
+
+To be recorded
+
+Pending
+
+TC-07
+
+Fault handling
+
+To be recorded
+
+Pending
+
+TC-08
+
+Continuous operation
+
+To be recorded
+
+Pending
+
+TC-09
+
+Detection logic
+
+To be recorded
+
+Pending
+
+TC-10
+
+Restart and recovery
+
+To be recorded
+
+Pending
+
+The results should be updated only after performing the corresponding tests. Any failure should be investigated, corrected, and retested where appropriate.
+
+8. Safety Precautions
+Safety precautions must be followed throughout the testing process.
+
+Do not create an uncontrolled fire or hazardous smoke conditions.
+
+Disconnect power before modifying circuit connections.
+
+Ensure that sensor output voltages are compatible with the ESP32.
+
+Avoid short circuits and incorrect polarity.
+
+Keep real fire suppression hardware disconnected.
+
+Follow the manufacturer's instructions for each component.
+
+Do not consider successful sensor readings as proof of reliable fire detection.
+
+The prototype should be treated as an experimental electronic system, not as a certified fire safety device.
+
+9. Limitations
+The testing plan evaluates only the basic functionality of the installed hardware and programmed firmware. Sensor readings may vary depending on environmental conditions, calibration, and component characteristics.
+
+The tests do not establish the accuracy of fire detection under all conditions, long-term reliability, or the effectiveness of a real suppression system. Further testing, calibration, engineering evaluation, and compliance assessment would be necessary before practical deployment.
+
+10. Conclusion
+The testing plan provides a systematic method for evaluating the ESP32-based fire detection prototype. It verifies sensor communication, controller operation, warning indication, detection logic, and basic fault handling.
+
+The recorded results help identify hardware and software problems and support future improvements. Successful completion of these tests demonstrates basic prototype functionality only; additional validation is required before the system can be considered for real-world fire safety applications.
+
+
